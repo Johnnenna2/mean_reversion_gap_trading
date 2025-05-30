@@ -2,10 +2,10 @@ name: Automated Gap Scanner
 
 on:
   schedule:
-    # Pre-market scan: 9:15 AM EST (2:15 PM UTC) - Monday to Friday
-    - cron: '15 14 * * 1-5'
-    # After-hours scan: 5:00 PM EST (10:00 PM UTC) - Monday to Friday  
-    - cron: '0 22 * * 1-5'
+    # Pre-market scan: 9:15 AM EDT (1:15 PM UTC) - Monday to Friday
+    - cron: '15 13 * * 1-5'
+    # After-hours scan: 5:00 PM EDT (9:00 PM UTC) - Monday to Friday  
+    - cron: '0 21 * * 1-5'
   workflow_dispatch:
     inputs:
       test_mode:
@@ -70,6 +70,19 @@ jobs:
           *.csv
           *.log
         retention-days: 30
+        
+    - name: Create summary
+      if: steps.market_check.outputs.SKIP == 'false'
+      run: |
+        echo "## 📊 Gap Scan Summary" >> $GITHUB_STEP_SUMMARY
+        echo "**Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "**Status:** ✅ Completed successfully" >> $GITHUB_STEP_SUMMARY
+        
+        if ls *recommendations*.csv 1> /dev/null 2>&1; then
+          echo "**Recommendations:** Found trading opportunities" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "**Recommendations:** No significant gaps found" >> $GITHUB_STEP_SUMMARY
+        fi
         
     - name: Handle errors
       if: failure()
