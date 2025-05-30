@@ -1,0 +1,14 @@
+
+GAP-FILL MODEL TRAINING SUMMARY
+===============================
+Date: 2025-05-23 14:52:04
+Dataset: ENHANCED
+Training Samples: 4275
+Features: 38
+Test Accuracy: 63.6%
+Test AUC: 0.708
+Best Threshold: 85%
+Best Accuracy: 91.5%
+
+Model Status: READY FOR TRADING
+Next Step: python updated_daily_gap_scanner.py

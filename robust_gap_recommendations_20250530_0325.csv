@@ -1,0 +1,2 @@
+symbol,sector,action,strategy,gap_pct,confidence,position_size,current_price,volume,volume_ratio,rsi,vix,rationale
+NVDA,Technology,BUY CALLS,Gap Continuation,5.5%,86.7%,LARGE (2%),$139.19,"369,241,900",1.7x,80,19.2,"Gap Continuation - 5.5% gap, 87% confidence"

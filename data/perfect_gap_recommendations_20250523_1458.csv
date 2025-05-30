@@ -1,0 +1,2 @@
+symbol,sector,action,strategy,gap_pct,confidence,position_size,current_price,volume,volume_ratio,rsi,vix,rationale
+META,Technology,BUY CALLS,Gap Fill Play,-2.0%,77.8%,SMALL (1%),$629.75,"5,996,871",0.4x,62,20.0,"Gap Fill Play - -2.0% gap, 78% confidence"

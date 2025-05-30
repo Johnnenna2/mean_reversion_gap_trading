@@ -1,0 +1,7 @@
+symbol,sector,action,strategy,gap_pct,confidence,position_size,current_price,volume,volume_ratio,rsi,vix,rationale
+CAT,Other,BUY CALLS,Gap Fill Play,1.9%,88.5%,LARGE (2%),$351.86,"1,409,079",1.0x,50,19.1,"Gap Fill Play - 1.9% gap, 88% confidence"
+NKE,Consumer,BUY CALLS,Gap Fill Play,1.8%,88.5%,LARGE (2%),$62.53,"9,968,473",1.0x,50,19.1,"Gap Fill Play - 1.8% gap, 88% confidence"
+BAC,Financial,BUY CALLS,Gap Fill Play,-1.9%,87.0%,LARGE (2%),$43.20,"34,871,000",1.0x,50,22.3,"Gap Fill Play - -1.9% gap, 87% confidence"
+TSLA,EV/Clean,BUY CALLS,Gap Fill Play,2.4%,76.5%,SMALL (1%),$359.20,"92,860,988",1.0x,50,19.1,"Gap Fill Play - 2.4% gap, 77% confidence"
+NVDA,Technology,BUY CALLS,Gap Fill Play,2.2%,76.1%,SMALL (1%),$135.25,"143,582,392",1.0x,50,19.1,"Gap Fill Play - 2.2% gap, 76% confidence"
+TMO,Healthcare,BUY CALLS,Gap Fill Play,2.1%,75.7%,SMALL (1%),$404.55,"1,767,876",1.0x,50,19.1,"Gap Fill Play - 2.1% gap, 76% confidence"

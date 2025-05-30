@@ -1,0 +1,3 @@
+symbol,sector,action,strategy,gap_pct,confidence,position_size,current_price,volume,volume_ratio,rsi,vix,rationale
+CAT,Other,BUY CALLS,Gap Fill Play,1.9%,81.2%,MEDIUM (1.5%),$352.76,"1,285,721",0.5x,75,20.0,"Gap Fill Play - 1.9% gap, 81% confidence"
+TMO,Healthcare,BUY CALLS,Gap Fill Play,2.1%,78.2%,SMALL (1%),$405.38,"1,619,870",0.6x,49,20.0,"Gap Fill Play - 2.1% gap, 78% confidence"
