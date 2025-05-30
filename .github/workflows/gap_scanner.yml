@@ -1,0 +1,93 @@
+name: Automated Gap Scanner
+
+on:
+  schedule:
+    # Pre-market scan: 9:15 AM EST (2:15 PM UTC) - Monday to Friday
+    - cron: '15 14 * * 1-5'
+    # After-hours scan: 5:00 PM EST (10:00 PM UTC) - Monday to Friday  
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      test_mode:
+        description: 'Run in test mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  TZ: America/New_York
+
+jobs:
+  gap-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Check market hours
+      id: market_check
+      run: |
+        python -c "
+        from datetime import datetime
+        import pytz
+        est = pytz.timezone('US/Eastern')
+        now = datetime.now(est)
+        weekday = now.weekday()
+        
+        if weekday >= 5:
+            print('SKIP=true')
+        else:
+            print('SKIP=false')
+        " >> $GITHUB_OUTPUT
+        
+    - name: Run gap scanner
+      if: steps.market_check.outputs.SKIP == 'false'
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: |
+        echo "🚀 Starting automated gap scan..."
+        python daily_screener.py --automated
+        
+    - name: Upload scan results
+      if: steps.market_check.outputs.SKIP == 'false'
+      uses: actions/upload-artifact@v4
+      with:
+        name: gap-scan-results-${{ github.run_number }}
+        path: |
+          *.csv
+          *.log
+        retention-days: 30
+        
+    - name: Handle errors
+      if: failure()
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: |
+        python -c "
+        import os, requests, json
+        from datetime import datetime
+        webhook_url = os.getenv('DISCORD_WEBHOOK_URL')
+        if webhook_url:
+            payload = {
+                'embeds': [{
+                    'title': '🚨 Gap Scanner Failed!',
+                    'description': 'GitHub Actions workflow failed\nCheck logs for details',
+                    'color': 0xff0000,
+                    'timestamp': datetime.utcnow().isoformat()
+                }]
+            }
+            requests.post(webhook_url, json=payload)
+        "
